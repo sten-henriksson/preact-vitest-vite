@@ -4,17 +4,6 @@ jobs:
   welcome:
     runs-on: [self-hosted, x64, sten-laptop]
     steps:
-      - name: Read text file content
-        uses: actions/github-script@v4
-        id: get_file_content
-        with:
-          script: |
-            const fs = require('fs');
-            const fileContent = fs.readFileSync('./testtext.txt', 'utf8');
-            return {
-              fileContent: fileContent,
-            }
-
       - uses: actions/github-script@v6
         with:
           script: |
@@ -26,6 +15,8 @@ jobs:
               creator,
               state: 'all'
             })
+            const fs = require('fs');
+            const fileContent = fs.readFileSync('./testtext.txt', 'utf8');
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
