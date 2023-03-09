@@ -10,9 +10,8 @@ jobs:
           echo '```' > coverage.txt
           yarn vitest run --coverage --silent >> coverage.txt
           echo '```' >> coverage.txt
-          echo ls
           cat coverage.txt
-          tail --bytes=+4 coverage.txt > coverage.txt
+          tail --bytes=+4 coverage.txt > coverage.txt 
       - uses: actions/github-script@v6
         with:
           script: |
@@ -24,11 +23,26 @@ jobs:
               creator,
               state: 'all'
             })
-            const fs = require('fs');
-            const fileContent = fs.readFileSync('coverage.md', 'utf8');
-            await github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: fileContent
-            })
+
+            let fileContent 
+
+            const { exec } = require("child_process");
+
+            exec("ls -la", (error, stdout, stderr) => {
+                if (error) {
+                    console.log(`error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                }
+                fileContent = stdout
+                github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: fileContent
+                })
+            });
+            
