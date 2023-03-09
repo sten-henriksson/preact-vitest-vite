@@ -7,11 +7,11 @@ jobs:
       - name: Check if merge to main then build and publish
         run: |
           yarn
-          echo '```' > coverage.txt
-          yarn vitest run --coverage --silent >> coverage.txt
-          echo '```' >> coverage.txt
-          cat coverage.txt
-          tail --bytes=+4 coverage.txt > coverage.txt 
+          echo '```' > coverage.md
+          yarn vitest run --coverage --silent >> coverage.md
+          echo '```' >> coverage.md
+          cat coverage.md
+          tail --bytes=+4 coverage.md > coverage.md 
       - uses: actions/github-script@v6
         with:
           script: |
@@ -23,23 +23,14 @@ jobs:
               creator,
               state: 'all'
             })
+            const fs = require('fs');
+            const fileContent = fs.readFileSync('coverage.md', 'utf8');
 
-            let fileContent 
-            exec("ls -la", (error, stdout, stderr) => {
-                if (error) {
-                    console.log(`error: ${error.message}`);
-                    return;
-                }
-                if (stderr) {
-                    console.log(`stderr: ${stderr}`);
-                    return;
-                }
-                fileContent = stdout
-                github.rest.issues.createComment({
-                  issue_number: context.issue.number,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  body: fileContent
-                })
-            });
+
             
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: fileContent
+            })
