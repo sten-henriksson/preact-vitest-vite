@@ -1,0 +1,34 @@
+{
+  "numTotalTestSuites": 1,
+  "numPassedTestSuites": 1,
+  "numFailedTestSuites": 0,
+  "numPendingTestSuites": 0,
+  "numTotalTests": 1,
+  "numPassedTests": 1,
+  "numFailedTests": 0,
+  "numPendingTests": 0,
+  "numTodoTests": 0,
+  "startTime": 1678386347453,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            ""
+          ],
+          "fullName": " should display initial count",
+          "status": "passed",
+          "title": "should display initial count",
+          "duration": 7,
+          "failureMessages": []
+        }
+      ],
+      "startTime": 1678386349618,
+      "endTime": 1678386349625,
+      "status": "passed",
+      "message": "",
+      "name": "/home/stenasd2/Documents/devops_sandbox/preact-vitest-vite/__test__/app.test.tsx"
+    }
+  ]
+}

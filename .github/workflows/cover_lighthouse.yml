@@ -7,26 +7,9 @@ jobs:
       - name: Check if merge to main then build and publish
         run: |
           yarn
-          echo '```' > coverage.md
-          yarn vitest run --coverage --silent >> coverage.md
-          echo '```' >> coverage.md
-          cat coverage.md
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            // Get a list of all issues created by the PR opener
-            // See: https://octokit.github.io/rest.js/#pagination
-            const creator = context.payload.sender.login
-            const opts = github.rest.issues.listForRepo.endpoint.merge({
-              ...context.issue,
-              creator,
-              state: 'all'
-            })
-            const fs = require('fs');
-            const fileContent = fs.readFileSync('coverage.md');
-            await github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: fileContent
-            })
+          echo '```' > coverage.txt
+          yarn vitest run --coverage --silent >> coverage.txt
+          echo '```' >> coverage.txt
+          curl -s -H "Authorization: token ${secrets.TOKEN}" \
+          -X POST -d '{"body": "Your Message to Comment"}' \
+          "https://api.github.com/repos/${GITHUB_REPOSITORY_OWNER}/${github.event.repository.name }/issues/${github.event.number}/comments"
