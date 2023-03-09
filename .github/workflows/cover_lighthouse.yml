@@ -1,39 +1,37 @@
-name: Add text file content as comment on merge request
-on:
-  pull_request:
-    types: [opened]
+on: pull_request_target
 
 jobs:
-  add_comment:
+  welcome:
     runs-on: [self-hosted, x64, sten-laptop]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Read text file content
-        uses: actions/github-script@v4
-        id: get_file_content
+      - uses: actions/github-script@v6
         with:
           script: |
-            const fs = require('fs');
-            const fileContent = fs.readFileSync('./testtext.txt', 'utf8');
-            return {
-              fileContent: fileContent,
+            // Get a list of all issues created by the PR opener
+            // See: https://octokit.github.io/rest.js/#pagination
+            const creator = context.payload.sender.login
+            const opts = github.rest.issues.listForRepo.endpoint.merge({
+              ...context.issue,
+              creator,
+              state: 'all'
+            })
+            const issues = await github.paginate(opts)
+
+            for (const issue of issues) {
+              if (issue.number === context.issue.number) {
+                continue
+              }
+
+              if (issue.pull_request) {
+                return // Creator is already a contributor.
+              }
             }
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Add comment to pull request
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const { data: comment } = await github.issues.createComment({
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: `${
-                context.payload.pull_request.user.login
-              } opened a pull request and the content of the text file is: ${
-                github.context.payload.get_file_content.fileContent
-              }`,
-            });
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              body: `**Welcome**, new contributor!
+
+                Please make sure you're read our [contributing guide](CONTRIBUTING.md) and we look forward to reviewing your Pull request shortly ✨`
+            })
