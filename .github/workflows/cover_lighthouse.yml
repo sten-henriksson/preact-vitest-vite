@@ -12,4 +12,4 @@ jobs:
           echo '```' >> coverage.txt
           curl -s -H "Authorization: token ${secrets.TOKEN}" \
           -X POST -d '{"body": "Your Message to Comment"}' \
-          "https://api.github.com/repos/${GITHUB_REPOSITORY_OWNER}/${github.event.repository.name }/issues/${github.event.number}/comments"
+          "https://api.github.com/repos/sten-henriksson/preact-vitest-vite/issues/${github.event.number}/comments"
