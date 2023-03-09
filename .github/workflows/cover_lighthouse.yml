@@ -7,9 +7,9 @@ jobs:
       - name: Check if merge to main then build and publish
         run: |
           yarn
-          echo '```' > coverage.md
-          yarn vitest run --coverage --silent >> coverage.md
-          echo '```' >> coverage.md
+          echo '```' > coverage.txt
+          yarn vitest run --coverage --silent >> coverage.txt
+          echo '```' >> coverage.txt
           echo ls
           cat coverage.txt
           tail --bytes=+4 coverage.txt > coverage.txt
