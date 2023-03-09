@@ -5,7 +5,6 @@ jobs:
     runs-on: [self-hosted, x64, sten-laptop]
     steps:
       - name: Check if merge to main then build and publish
-        if: github.event.pull_request.base.ref == 'main'
         run: |
           yarn
           yarn vitest run --silent --coverage > coverage.txt
@@ -33,4 +32,3 @@ jobs:
               repo: context.repo.repo,
               body: fileContent
             })
- 
