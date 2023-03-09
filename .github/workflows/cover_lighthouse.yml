@@ -1,6 +1,15 @@
 on: pull_request_target
 
 jobs:
+  welcome1:
+    runs-on: [self-hosted, x64, sten-laptop]
+    steps:
+      - name: Check if merge to main then build and publish
+        if: github.event.pull_request.base.ref == 'main'
+        run: |
+          cd .\core\web\
+          yarn
+          yarn vitest run --silent --coverage > coverage.txt
   welcome:
     runs-on: [self-hosted, x64, sten-laptop]
     steps:
@@ -16,7 +25,9 @@ jobs:
               state: 'all'
             })
             const fs = require('fs');
-            const fileContent = fs.readFileSync('./testtext.txt', 'utf8');
+            // const light = JSON.parse(fs.readFileSync('light_house', 'utf8'));
+            // const vitest = JSON.parse(fs.readFileSync('vitest_test', 'utf8'));
+            const fileContent = fs.readFileSync('./coverage.txt', 'utf8');
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
