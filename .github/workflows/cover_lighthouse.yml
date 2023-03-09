@@ -9,6 +9,8 @@ jobs:
         run: |
           yarn
           yarn vitest run --silent --coverage > coverage.txt
+          echo ls
+          cat coverage.txt
   welcome:
     runs-on: [self-hosted, x64, sten-laptop]
     steps:
@@ -24,8 +26,6 @@ jobs:
               state: 'all'
             })
             const fs = require('fs');
-            // const light = JSON.parse(fs.readFileSync('light_house', 'utf8'));
-            // const vitest = JSON.parse(fs.readFileSync('vitest_test', 'utf8'));
             const fileContent = fs.readFileSync('./coverage.txt', 'utf8');
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
