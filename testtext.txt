@@ -8,8 +8,8 @@ $ /home/stenasd2/Documents/devops_sandbox/preact-vitest-vite/node_modules/.bin/v
 
  Test Files  1 passed (1)
       Tests  1 passed (1)
-   Start at  18:31:31
-   Duration  2.27s (transform 315ms, setup 490ms, collect 181ms, tests 9ms)
+   Start at  19:07:58
+   Duration  2.29s (transform 255ms, setup 587ms, collect 174ms, tests 9ms)
 
  % Coverage report from c8
 
@@ -25,4 +25,4 @@ File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 All files |     100 |      100 |   66.66 |     100 |                   
  app.tsx  |     100 |      100 |   66.66 |     100 |                   
 ----------|---------|----------|---------|---------|-------------------
-Done in 3.15s.
+Done in 3.16s.
