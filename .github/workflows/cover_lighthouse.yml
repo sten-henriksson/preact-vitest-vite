@@ -10,6 +10,11 @@ jobs:
           yarn vitest run --silent > coverage.txt
           echo ls
           cat coverage.txt
+      - name: "Test"
+        run: yarn vitest --coverage
+      - name: "Report Coverage"
+        if: always() # Also generate the report if tests are failing
+        uses: davelosert/vitest-coverage-report-action@v1
       - uses: actions/github-script@v6
         with:
           script: |
