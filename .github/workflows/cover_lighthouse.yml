@@ -7,7 +7,6 @@ jobs:
       - name: Check if merge to main then build and publish
         if: github.event.pull_request.base.ref == 'main'
         run: |
-          cd .\core\web\
           yarn
           yarn vitest run --silent --coverage > coverage.txt
   welcome:
@@ -34,3 +33,4 @@ jobs:
               repo: context.repo.repo,
               body: fileContent
             })
+ 
