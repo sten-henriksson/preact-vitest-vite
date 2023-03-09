@@ -7,7 +7,7 @@ jobs:
       - name: Check if merge to main then build and publish
         run: |
           yarn
-          yarn vitest run --silent --coverage > coverage.txt
+          yarn vitest run --silent > coverage.txt
           echo ls
           cat coverage.txt
       - uses: actions/github-script@v6
