@@ -10,9 +10,6 @@ jobs:
           yarn vitest run --silent --coverage > coverage.txt
           echo ls
           cat coverage.txt
-  welcome:
-    runs-on: [self-hosted, x64, sten-laptop]
-    steps:
       - uses: actions/github-script@v6
         with:
           script: |
