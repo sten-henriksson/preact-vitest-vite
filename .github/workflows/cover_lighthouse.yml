@@ -29,9 +29,9 @@ jobs:
             - passed/total = ${testresults.numPassedTests}/${testresults.numTotalTests}
             - success:${testresults.success}
             # Test coverage
-            \'\'\'
+            \`\`\`
             ${replacedText}
-            \'\'\'
+            \`\`\`
             `
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
