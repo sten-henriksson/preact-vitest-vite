@@ -4,6 +4,7 @@ jobs:
   welcome1:
     runs-on: [self-hosted, x64, sten-laptop]
     steps:
+      - uses: actions/checkout@v3
       - name: Check if merge to main then build and publish
         run: |
           yarn >> yarn vitest run --coverage --silent > coverage.txt & yarn vitest run --coverage --silent --outputFile testresult.json --reporter=json
