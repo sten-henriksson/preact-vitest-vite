@@ -44,7 +44,6 @@ jobs:
             \`\`\`
             #lighthouse
             > performance:**${lighthouse.categories.performance.score}**
-            > practices:**${lighthouse.categories.best-practices.score}**
             > seo:**${lighthouse.categories.seo.score}**
             > accessibility:**${lighthouse.categories.accessibility.score}**
             `
