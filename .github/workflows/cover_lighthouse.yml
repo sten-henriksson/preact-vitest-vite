@@ -21,7 +21,9 @@ jobs:
             const testresults = JSON.parse(await fs.readFileSync('testresult.json',"utf8"));
             const regex = /.*\n=+/s;
             const replacedText = coverage_table.replace(regex, '');
-            
+              if (!testresults.success) {
+                throw new Error('tests failed');
+              }
             let sendstring = `
             # Tests
             - passed/total = ${testresults.numPassedTests}/${testresults.numTotalTests}
