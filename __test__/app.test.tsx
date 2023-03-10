@@ -5,5 +5,5 @@ import { render, fireEvent, screen, waitFor } from '@testing-library/preact';
 
 
 test('should display initial count', () => {
-  expect(true).toBe(true);
+  expect(true).toBe(false);
 });
