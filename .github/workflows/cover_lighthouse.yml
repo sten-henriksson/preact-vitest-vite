@@ -4,7 +4,10 @@ jobs:
   welcome1:
     runs-on: [self-hosted, x64, sten-laptop]
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: "refs/pull/${{ github.event.number }}/merge"
       - name: Check if merge to main then build and publish
         run: |
           ls
