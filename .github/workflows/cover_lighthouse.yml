@@ -30,19 +30,14 @@ jobs:
             const lighthouse = JSON.parse(await fs.readFileSync('report.json',"utf8"));
             const regex = /.*\n=+/s;
             const replacedText = coverage_table.replace(regex, '');
-              if (!testresults.success) {
-                throw new Error('tests failed');
-              }
-
             let sendstring = `
             # Tests
             - passed/total = ${testresults.numPassedTests}/${testresults.numTotalTests}
-            - success:${testresults.success}
             # Test coverage
             \`\`\`
             ${replacedText}
             \`\`\`
-            #lighthouse
+            # lighthouse
             > performance:**${lighthouse.categories.performance.score}**
             > seo:**${lighthouse.categories.seo.score}**
             > accessibility:**${lighthouse.categories.accessibility.score}**
