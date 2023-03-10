@@ -6,10 +6,32 @@ jobs:
     steps:
       - name: Check if merge to main then build and publish
         run: |
-          yarn
-          echo '```' > coverage.txt
-          yarn vitest run --coverage --silent >> coverage.txt
-          echo '```' >> coverage.txt
-          curl -s -H "Authorization: token ${secrets.TOKEN}" \
-          -X POST -d '{"body": "Your Message to Comment"}' \
-          "https://api.github.com/repos/sten-henriksson/preact-vitest-vite/issues/${github.event.number}/comments"
+          yarn >> yarn vitest run --coverage --silent > coverage.txt & yarn vitest run --coverage --silent --outputFile testresult.json --reporter=json
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const creator = context.payload.sender.login
+            const opts = github.rest.issues.listForRepo.endpoint.merge({
+              ...context.issue,
+              creator,
+              state: 'all'
+            })
+            const fs = require('fs');
+            const coverage_table = fs.readFileSync('coverage.txt');
+            const testresults = fs.readFileSync('testresult.json');
+            const regex = /.*\n=+/s;
+            const replacedText = coverage_table.replace(regex, '');
+            
+            let sendstring = `
+            # Tests
+            - ${testresults.numPassedTests}/${testresults.numTotalTests}
+            - success:${testresults.success}
+            # Test coverage
+            ${replacedText}
+            `
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: sendstring
+            })

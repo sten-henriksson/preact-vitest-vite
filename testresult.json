@@ -8,7 +8,7 @@
   "numFailedTests": 0,
   "numPendingTests": 0,
   "numTodoTests": 0,
-  "startTime": 1678386347453,
+  "startTime": 1678438050053,
   "success": true,
   "testResults": [
     {
@@ -20,12 +20,12 @@
           "fullName": " should display initial count",
           "status": "passed",
           "title": "should display initial count",
-          "duration": 7,
+          "duration": 11,
           "failureMessages": []
         }
       ],
-      "startTime": 1678386349618,
-      "endTime": 1678386349625,
+      "startTime": 1678438053214,
+      "endTime": 1678438053225,
       "status": "passed",
       "message": "",
       "name": "/home/stenasd2/Documents/devops_sandbox/preact-vitest-vite/__test__/app.test.tsx"
