@@ -18,7 +18,7 @@ jobs:
             })
             const fs = require('fs');
             const coverage_table = await fs.readFileSync('coverage.txt',"utf8");
-            const testresults = await fs.readFileSync('testresult.json',"utf8");
+            const testresults = JSON.parse(await fs.readFileSync('testresult.json',"utf8"));
             const regex = /.*\n=+/s;
             const replacedText = coverage_table.replace(regex, '');
             
